@@ -37,4 +37,28 @@ final class OCRTest extends TestCase {
         $this->assertEquals("8888?8888", $ocr->convertToNumbers());
     }
 
+    public function testOKStatus() {
+        $input = "    _  _  _  _  _  _  _  _ " .
+                 "|_||_   ||_ | ||_|| || || |" .
+                 "  | _|  | _||_||_||_||_||_|";
+        $ocr = new OCR($input);
+        $this->assertEquals("OK", $ocr->getStatus());
+    }
+
+    public function testILLStatus() {
+        $input = "    _  _  _  _  _  _  _  _ " .
+                 "|_||_   ||  | ||_|| || || |" .
+                 "  | _|  | _||_||_||_||_||_|";
+        $ocr = new OCR($input);
+        $this->assertEquals("ILL", $ocr->getStatus());
+    }
+
+    public function testERRStatus() {
+        $input = "    _  _  _  _  _  _  _  _ " .
+                 "|_||_   ||_ |_||_|| || || |" .
+                 "  | _|  | _||_||_||_||_||_|";
+        $ocr = new OCR($input);
+        $this->assertEquals("ERR", $ocr->getStatus());
+    }
+
 }

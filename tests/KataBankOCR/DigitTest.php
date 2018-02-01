@@ -11,6 +11,7 @@ final class DigitTest extends TestCase {
                 "|_|";
         $digit = new Digit($number);
         $this->assertEquals(0, $digit->convertToNumber());
+        $this->assertTrue($digit->isValid());
     }
 
     public function testOne() {
@@ -19,12 +20,14 @@ final class DigitTest extends TestCase {
                 "  |";
         $digit = new Digit($number);
         $this->assertEquals(1, $digit->convertToNumber());
+        $this->assertTrue($digit->isValid());
     }
 
     public function testInvalidNumber() {
         $number = "_____||||";
         $digit = new Digit($number);
         $this->assertEquals("?", $digit->convertToNumber());
+        $this->assertFalse($digit->isValid());
     }
 
     /**

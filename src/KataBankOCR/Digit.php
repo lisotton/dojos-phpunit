@@ -15,6 +15,10 @@ class Digit {
         return isset($mapping[$this->number]) ? $mapping[$this->number] : "?";
     }
 
+    function isValid() {
+        return isset($this->getMapping()[$this->number]);
+    }
+
     private function getMapping() {
         $mapping = [
             0 => " _ " .
