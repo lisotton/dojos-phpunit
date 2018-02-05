@@ -9,6 +9,10 @@ class OCR {
     private $numbers;
 
     function __construct($input) {
+        if (strlen($input) % 9 !== 0) {
+            throw new \InvalidArgumentException("Input should have 3 lines and columns should be multiple of 3.");
+        }
+
         $this->input = $input;
     }
 
@@ -18,6 +22,7 @@ class OCR {
         }
 
         $digits = $this->splitDigits();
+
         $this->numbers = "";
         foreach ($digits as $digit) {
             $digit = new Digit($digit);

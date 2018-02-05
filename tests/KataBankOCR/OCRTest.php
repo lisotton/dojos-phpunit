@@ -13,6 +13,14 @@ final class OCRTest extends TestCase {
         $this->assertEquals("000000000", $ocr->convertToNumbers());
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testInvalidInput() {
+        $input = "Invalid";
+        new OCR($input);
+    }
+
     public function testConvertNumberOne() {
         $input = " _  _  _  _  _  _  _  _    " .
                  "| || || || || || || || |  |" .
