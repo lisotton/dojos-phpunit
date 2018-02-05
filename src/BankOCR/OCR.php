@@ -1,6 +1,6 @@
 <?php
 
-namespace Dojo\KataBankOCR;
+namespace Dojo\BankOCR;
 
 class OCR {
 

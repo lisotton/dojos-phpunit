@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Dojo\KataBankOCR\OCR;
+use Dojo\BankOCR\OCR;
 
 final class OCRTest extends TestCase {
 

@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Dojo\KataBankOCR\Digit;
+use Dojo\BankOCR\Digit;
 
 final class DigitTest extends TestCase {
 
