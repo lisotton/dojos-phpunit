@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Solution for: http://codingdojo.org/kata/BankOCR/
+ */
+
 namespace Dojo\BankOCR;
 
 class OCR {
@@ -8,7 +12,15 @@ class OCR {
     private $status;
     private $numbers;
 
-    function __construct($input) {
+    /**
+     * Class constructor.
+     *
+     * @param string $input
+     *   The representation.
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function __construct(string $input) {
         if (strlen($input) % 9 !== 0) {
             throw new \InvalidArgumentException("Input should have 3 lines and columns should be multiple of 3.");
         }
@@ -16,7 +28,13 @@ class OCR {
         $this->input = $input;
     }
 
-    function convertToNumbers() {
+    /**
+     * Covert into numeric numbers the given representation.
+     *
+     * @return string
+     *   Return the list of numeric numbers.
+     */
+    public function convertToNumbers(): string {
         if (isset($this->numbers)) {
             return $this->numbers;
         }
@@ -31,7 +49,16 @@ class OCR {
         return $this->numbers;
     }
 
-    function getStatus() {
+    /**
+     * Check the status of current numbers.
+     *
+     * @return string
+     *   Status of current number. Possible values:
+     *   - OK: valid number.
+     *   - ILL: some representation were not readable.
+     *   - ERR: checksum is invalid.
+     */
+    public function getStatus(): string {
         if (isset($this->status)) {
             return $this->status;
         }
@@ -49,7 +76,13 @@ class OCR {
         return $this->status = 'OK';
     }
 
-    private function splitDigits() {
+    /**
+     * Split given representation into array of digits.
+     *
+     * @return array
+     *   List representation digits.
+     */
+    private function splitDigits(): array {
         $amountOfDigits = strlen($this->input) / 3 / 3;
         $digits = [];
         for ($i = 0; $i < $amountOfDigits * 3; $i++) {
@@ -58,7 +91,13 @@ class OCR {
         return $digits;
     }
 
-    private function calculateChecksum() {
+    /**
+     * Calculate the checksum of numbers.
+     *
+     * @return int
+     *   Checksum of numbers.
+     */
+    private function calculateChecksum(): int {
         $numbers = $this->convertToNumbers();
 
         $sum = 0;

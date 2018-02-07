@@ -5,7 +5,7 @@ use Dojo\PotterBasket\Basket;
 
 class BasketTest extends TestCase {
 
-    function testBasicBasket() {
+    public function testBasicBasket() {
         $basket = new Basket();
         $this->assertEquals(0, $basket->calculatePrice());
 
@@ -40,12 +40,12 @@ class BasketTest extends TestCase {
     /**
      * @expectedException \InvalidArgumentException
      */
-    function testInvalidBookVersion() {
+    public function testInvalidBookVersion() {
         $basket = new Basket();
         $basket->addBooks(6, 1);
     }
 
-    function testSimpleDiscounts() {
+    public function testSimpleDiscounts() {
         $basket = new Basket();
         $basket->addBooks(1, 1);
         $basket->addBooks(2, 1);
@@ -61,7 +61,7 @@ class BasketTest extends TestCase {
         $this->assertEquals(Basket::BOOK_PRICE * 5 * 0.75, $basket->calculatePrice());
     }
 
-    function testSeveralDiscounts() {
+    public function testSeveralDiscounts() {
         $basket = new Basket();
         $basket->addBooks(1, 2);
         $basket->addBooks(2, 1);
@@ -83,7 +83,7 @@ class BasketTest extends TestCase {
         $this->assertEquals((Basket::BOOK_PRICE * 5 * 0.75) + Basket::BOOK_PRICE, $basket->calculatePrice());
     }
 
-    function testEdgeCases() {
+    public function testEdgeCases() {
         $basket = new Basket();
         $basket->addBooks(1, 2);
         $basket->addBooks(2, 2);

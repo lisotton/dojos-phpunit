@@ -5,27 +5,27 @@ use Dojo\FizzBuzz\FizzBuzz;
 
 final class FizzBuzzTest extends TestCase {
 
-    function testFizzForThree() {
+    public function testFizzForThree() {
         $fb = new FizzBuzz(3);
         $this->assertEquals('Fizz', $fb->toText());
     }
 
-    function testBuzzForFive() {
+    public function testBuzzForFive() {
         $fb = new FizzBuzz(5);
         $this->assertEquals('Buzz', $fb->toText());
     }
 
-    function testFizzBuzzForFifteen() {
+    public function testFizzBuzzForFifteen() {
         $fb = new FizzBuzz(15);
         $this->assertEquals('FizzBuzz', $fb->toText());
     }
 
-    function testNumberForNotDivisible() {
+    public function testNumberForNotDivisible() {
         $fb = new FizzBuzz(4);
         $this->assertEquals(4, $fb->toText());
     }
 
-    function testFizzBuzzSequence() {
+    public function testFizzBuzzSequence() {
         $sequence = FizzBuzz::sequence();
         $this->assertEquals(100, count($sequence));
 
