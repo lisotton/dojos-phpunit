@@ -15,8 +15,8 @@ class Basket {
             throw new \InvalidArgumentException("Invalid book version.");
         }
 
-        $this->basket[$version - 1] = $this->basket[$version - 1] ?? 0;
-        $this->basket[$version - 1] += $quantity;
+        $this->basket[$version] = $this->basket[$version] ?? 0;
+        $this->basket[$version] += $quantity;
     }
 
     function clear() {
@@ -28,6 +28,31 @@ class Basket {
             return 0;
         }
 
+        $collections = $this->createCollections();
+        $total = $this->calculateTotal($collections);
+
+        if (count($collections) == 1) {
+            return $total;
+        }
+
+        $redistributed_collections = $this->redistributeCollections($collections);
+        $redistributed_total = $this->calculateTotal($redistributed_collections);
+
+        return $redistributed_total < $total ? $redistributed_total : $total;
+    }
+
+    private function calculateTotal($collections) {
+        $total = 0;
+        foreach ($collections as $collection) {
+            $quantity = array_sum($collection);
+            $discount = self::DISCOUNT_RULE[$quantity] ?? 0;
+            $total += ($quantity * self::BOOK_PRICE) * (1 - $discount);
+        }
+
+        return $total;
+    }
+
+    private function createCollections() {
         $collections = [];
         $basket = $this->basket;
 
@@ -39,13 +64,29 @@ class Basket {
             }
         }
 
-        $total = 0;
-        foreach ($collections as $collection) {
-            $quantity = array_sum($collection);
-            $discount = self::DISCOUNT_RULE[$quantity] ?? 0;
-            $total += ($quantity * self::BOOK_PRICE) * (1 - $discount);
+        return $collections;
+    }
+
+    private function redistributeCollections($collections) {
+        foreach (array_keys($collections) as $i) {
+            foreach (array_reverse(array_keys($collections)) as $j) {
+                if ($i == $j || count($collections[$i]) <= count($collections[$j])) {
+                    break;
+                }
+
+                foreach ($collections[$i] as $version => $quantity) {
+                    if (!isset($collections[$j][$version])) {
+                        $collections[$j][$version] = 1;
+                        unset($collections[$i][$version]);
+                    }
+
+                    if (count($collections[$i]) <= count($collections[$j])) {
+                        break;
+                    }
+                }
+            }
         }
 
-        return $total;
+        return $collections;
     }
 }
